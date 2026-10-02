@@ -1,0 +1,60 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-label="Pulse, the CRM for gyms">
+  <style>
+    .t{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+    .beat{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1700;stroke-dashoffset:1700;animation:draw 3.6s cubic-bezier(.22,.61,.36,1) infinite}
+    .beat.ghost{stroke-opacity:.18;animation:none;stroke-dashoffset:0}
+    @keyframes draw{0%{stroke-dashoffset:1700}55%{stroke-dashoffset:0}80%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+    .bar{transform-box:fill-box;transform-origin:bottom;animation:grow 3.6s cubic-bezier(.22,.61,.36,1) infinite}
+    @keyframes grow{0%{transform:scaleY(.08)}45%,85%{transform:scaleY(1)}100%{transform:scaleY(.08)}}
+    .rise{animation:rise 1s cubic-bezier(.22,.61,.36,1) both}
+    @keyframes rise{from{opacity:0;transform:translateY(12px)}}
+    .dot{animation:blink 1.6s ease-in-out infinite}
+    @keyframes blink{50%{opacity:.25}}
+    @media (prefers-reduced-motion:reduce){.beat,.bar,.rise,.dot{animation:none}.beat{stroke-dashoffset:0}}
+  </style>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E4FBF"/><stop offset=".55" stop-color="#2F6CE5"/><stop offset="1" stop-color="#4B88EE"/></linearGradient>
+    <pattern id="st" width="44" height="44" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="22" height="44" fill="#fff" fill-opacity=".035"/></pattern>
+    <pattern id="bs" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="5" height="10" fill="#fff" fill-opacity=".9"/><rect x="5" width="5" height="10" fill="#fff" fill-opacity=".55"/></pattern>
+    <clipPath id="card"><rect width="1280" height="360" rx="28"/></clipPath>
+  </defs>
+  <g clip-path="url(#card)">
+    <rect width="1280" height="360" fill="url(#bg)"/>
+    <rect width="1280" height="360" fill="url(#st)"/>
+
+    <!-- heartbeat across the bottom: a faint trace, and a bright line that draws over it -->
+    <path class="beat ghost" d="M0 326H560l24-34 30 62 30-80 26 56 18-4H1280"/>
+    <path class="beat" d="M0 326H560l24-34 30 62 30-80 26 56 18-4H1280"/>
+
+    <!-- logo + wordmark -->
+    <g class="rise" transform="translate(72 70)">
+      <rect width="64" height="64" rx="19" fill="#fff" fill-opacity=".16" stroke="#fff" stroke-opacity=".35"/>
+      <path d="M10 37h12l6-16 10 28 8-20 4 8h12" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text class="t" x="84" y="47" font-size="44" font-weight="700" fill="#fff" letter-spacing="-1.5">Pulse</text>
+    </g>
+    <text class="t rise" x="72" y="182" font-size="34" font-weight="600" fill="#fff" letter-spacing="-1" style="animation-delay:.12s">Every enquiry followed up.</text>
+    <text class="t rise" x="72" y="224" font-size="34" font-weight="600" fill="#fff" letter-spacing="-1" style="animation-delay:.2s">Every renewal on time.</text>
+    <text class="t rise" x="74" y="258" font-size="16" fill="#fff" fill-opacity=".8" style="animation-delay:.3s">The CRM for gyms: leads, members, check-ins, payments, renewals and your sales team.</text>
+
+    <!-- live card with revenue bars -->
+    <g class="rise" transform="translate(880 54)" style="animation-delay:.25s">
+      <rect width="328" height="196" rx="20" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".3"/>
+      <circle class="dot" cx="26" cy="28" r="4.5" fill="#3CCB7F"/>
+      <text class="t" x="40" y="33" font-size="13" font-weight="600" fill="#fff">Revenue, last 12 months</text>
+      <g transform="translate(24 176)">
+        <rect class="bar" x="0" y="-62" width="16" height="62" rx="8" fill="url(#bs)" style="animation-delay:0s"/>
+        <rect class="bar" x="24" y="-58" width="16" height="58" rx="8" fill="url(#bs)" style="animation-delay:.05s"/>
+        <rect class="bar" x="48" y="-52" width="16" height="52" rx="8" fill="url(#bs)" style="animation-delay:.1s"/>
+        <rect class="bar" x="72" y="-74" width="16" height="74" rx="8" fill="url(#bs)" style="animation-delay:.15s"/>
+        <rect class="bar" x="96" y="-68" width="16" height="68" rx="8" fill="url(#bs)" style="animation-delay:.2s"/>
+        <rect class="bar" x="120" y="-80" width="16" height="80" rx="8" fill="url(#bs)" style="animation-delay:.25s"/>
+        <rect class="bar" x="144" y="-72" width="16" height="72" rx="8" fill="url(#bs)" style="animation-delay:.3s"/>
+        <rect class="bar" x="168" y="-66" width="16" height="66" rx="8" fill="url(#bs)" style="animation-delay:.35s"/>
+        <rect class="bar" x="192" y="-84" width="16" height="84" rx="8" fill="url(#bs)" style="animation-delay:.4s"/>
+        <rect class="bar" x="216" y="-92" width="16" height="92" rx="8" fill="url(#bs)" style="animation-delay:.45s"/>
+        <rect class="bar" x="240" y="-88" width="16" height="88" rx="8" fill="url(#bs)" style="animation-delay:.5s"/>
+        <rect class="bar" x="264" y="-100" width="16" height="100" rx="8" fill="#fff" style="animation-delay:.55s"/>
+      </g>
+    </g>
+  </g>
+</svg>
