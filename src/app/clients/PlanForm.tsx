@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { Check, X } from 'lucide-react';
 import { useState } from 'react';
+import { payOpts, peopleOpts } from '@/components/options';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button, IconButton } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
@@ -68,7 +69,7 @@ export default function PlanForm({ ctx, init }: { ctx: ConvCtx; init: Conv }) {
         {ctx !== 'renew' && (
           <div className="f2">
             <label>Start date<input type="date" value={iso(C.startOff)} onChange={e => { const o = parseDate(e.target.value); if (o != null) set({ startOff: o }); }} /></label>
-            <label>Trainer<Select value={C.trainer} onChange={v => set({ trainer: v })} options={TRAINERS} /></label>
+            <label>Trainer<Select value={C.trainer} onChange={v => set({ trainer: v })} options={peopleOpts(TRAINERS)} /></label>
           </div>
         )}
         <div className="tgl-row" style={{ border: 0, padding: '4px 0' }}>
@@ -77,7 +78,7 @@ export default function PlanForm({ ctx, init }: { ctx: ConvCtx; init: Conv }) {
         </div>
         <div className="f2">
           <label>Amount received now (₹)<input inputMode="numeric" value={recv ?? String(total)} onChange={e => setRecv(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') save(); }} /></label>
-          <label>Paid by<Select value={C.pay} onChange={v => set({ pay: v as PayMode })} options={PAY_MODES} /></label>
+          <label>Paid by<Select value={C.pay} onChange={v => set({ pay: v as PayMode })} options={payOpts(PAY_MODES)} /></label>
         </div>
         <div className="sum">
           <div><span>{p.k} plan</span><span className="num">{money(p.price)}</span></div>

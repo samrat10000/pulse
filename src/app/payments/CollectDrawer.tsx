@@ -1,5 +1,6 @@
 import { Check, X } from 'lucide-react';
 import { useState } from 'react';
+import { payOpts } from '@/components/options';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button, IconButton } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
@@ -38,7 +39,7 @@ export default function CollectDrawer({ id }: { id: string }) {
       <div className="form">
         <div className="f2">
           <label>Amount received (₹)<input data-autofocus inputMode="numeric" value={amt} onChange={e => setAmt(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') save(); }} /></label>
-          <label>Paid by<Select value={mode} onChange={v => setMode(v as PayMode)} options={PAY_MODES} /></label>
+          <label>Paid by<Select value={mode} onChange={v => setMode(v as PayMode)} options={payOpts(PAY_MODES)} /></label>
         </div>
         <p className="f-err" role={err ? 'alert' : undefined}>{err}</p>
         <Button variant="primary" icon={Check} onClick={save}>Record payment and make receipt</Button>

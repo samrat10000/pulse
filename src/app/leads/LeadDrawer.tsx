@@ -2,14 +2,12 @@ import { Mail, MessageCircle, Phone, RefreshCw, UserPlus, X } from 'lucide-react
 import { DueChip, StagePill, TempTag, Timeline } from '@/components/bits';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button, IconButton } from '@/components/ui/Button';
+import { followOpts, stageOpts, teamOpts } from '@/components/options';
 import { Select } from '@/components/ui/Select';
 import { findLead, leadActivity, repName } from '@/data/rules';
-import { STAGES } from '@/data/seed';
 import type { StageKey } from '@/data/types';
 import { ago, fmtDate } from '@/lib/format';
 import { toast, useDB, useStore } from '@/store/useStore';
-
-const FOLLOW_OPTS = [{ value: 'keep', label: 'Reschedule…' }, { value: '', label: 'No follow-up' }, { value: '0', label: 'Today' }, { value: '1', label: 'Tomorrow' }, { value: '3', label: 'In 3 days' }, { value: '7', label: 'Next week' }];
 
 export default function LeadDrawer({ id }: { id: string }) {
   const db = useDB();
@@ -47,14 +45,14 @@ export default function LeadDrawer({ id }: { id: string }) {
           <dt>Source</dt><dd>{l.source}</dd>
           <dt>Added</dt><dd>{ago(l.createdAt)}</dd>
           {!lost && <>
-            <dt>Stage</dt><dd><Select label="Stage" value={l.stage} options={[...STAGES.map(x => x.k), { value: 'Joined', label: 'Joined (make member)' }]} onChange={v => {
+            <dt>Stage</dt><dd><Select label="Stage" value={l.stage} options={stageOpts(true)} onChange={v => {
               // joining means a plan and a payment, so it goes through the convert form
               if (v === 'Joined') return s.startConv('convert', l);
               s.updateLead(l.id, { stage: v as StageKey, lastContact: 0 }); toast(`${l.name} moved to ${v}`);
             }} /></dd>
-            <dt>Assigned to</dt><dd><Select label="Assigned to" value={l.owner} options={db.team.map(t => ({ value: t.id, label: t.name }))} onChange={v => { s.updateLead(l.id, { owner: v }); toast(`${l.name} assigned to ${repName(db, v)}`); }} /></dd>
+            <dt>Assigned to</dt><dd><Select label="Assigned to" value={l.owner} options={teamOpts(db)} onChange={v => { s.updateLead(l.id, { owner: v }); toast(`${l.name} assigned to ${repName(db, v)}`); }} /></dd>
             <dt>Follow-up</dt><dd className="row gap6"><DueChip d={l.follow} />
-              <Select label="Reschedule follow-up" value="keep" options={FOLLOW_OPTS} onChange={v => { if (v === 'keep') return; const f = v === '' ? null : +v; s.updateLead(l.id, { follow: f }); toast(f == null ? 'Follow-up cleared' : `Follow-up set for ${fmtDate(f)}`); }} /></dd>
+              <Select label="Reschedule follow-up" value="keep" placeholder="Reschedule…" options={followOpts()} onChange={v => { const f = v === '' ? null : +v; s.updateLead(l.id, { follow: f }); toast(f == null ? 'Follow-up cleared' : `Follow-up set for ${fmtDate(f)}`); }} /></dd>
           </>}
         </dl>
       </div>

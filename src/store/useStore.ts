@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { ACCOUNTS, createDB, TRAINERS } from '@/data/seed';
-import { accounts, clearDB, DB_KEY, loadDB, parseDB, readProfiles, saveDB } from '@/data/persist';
+import { accounts, DB_KEY, loadDB, parseDB, readProfiles, saveDB } from '@/data/persist';
 import { checkedInToday, convTotal, findClient, findLead, leastLoadedRep, planOf } from '@/data/rules';
 import type { Account, Campaign, Client, DB, Gym, Lead, NotifKey, Payment, PayMode, RoleKey, SegmentKey, StageKey, TeamMember } from '@/data/types';
 import { newImp, type ImpState } from '@/import/mapping';
@@ -37,7 +37,7 @@ export interface UI {
   lView: 'table' | 'board'; lTab: string; lQuery: string; lOwner: string; lSource: string; lSort: { key: 'name' | 'score' | 'follow' | 'createdAt'; dir: number }; lPage: number; lSel: Set<string>;
   cTab: string; cQuery: string; cPlan: string; cTrainer: string; cSort: { key: 'name' | 'end' | 'visits' | 'paid' | 'since'; dir: number }; cPage: number; cSel: Set<string>;
   pTab: 'receipts' | 'dues'; pQuery: string; pPage: number;
-  range: 12 | 6; set: 'gym' | 'plans' | 'notif' | 'look' | 'demo'; fc: 30 | 60 | 90; side: boolean; kiosk: boolean;
+  range: 12 | 6; set: 'gym' | 'plans' | 'notif' | 'look'; fc: 30 | 60 | 90; side: boolean; kiosk: boolean;
 }
 const initUI = (): UI => ({
   lView: 'table', lTab: 'All', lQuery: '', lOwner: 'all', lSource: 'all', lSort: { key: 'follow', dir: 1 }, lPage: 1, lSel: new Set(),
@@ -105,8 +105,6 @@ interface State {
   savePlans: (rows: { k: string; months: number; price: number }[]) => boolean;
   setNotif: (k: NotifKey, on: boolean) => void;
 
-  /** back to the seeded demo data */
-  resetDemo: () => void;
   addCampaign: (c: Campaign) => void;
   patchCampaign: (id: string, patch: Partial<Campaign>) => void;
 }
@@ -296,12 +294,6 @@ export const useStore = create<State>()((set, get) => {
     },
     setNotif: (k, on) => mutate(db => { db.notif[k] = on; }),
 
-    resetDemo: () => {
-      clearDB(); storage.set('local', 'pulse-profiles', null);
-      const me = get().me;
-      set({ db: createDB(), me: me && accounts()[me.key], fresh: new Set(), drawer: null, modal: null, imp: newImp('Leads') });
-      bump();
-    },
 
     addCampaign: c => mutate(db => { db.campaigns.unshift(c); }),
     patchCampaign: (id, patch) => mutate(db => { const c = db.campaigns.find(x => x.id === id); if (c) Object.assign(c, patch); }),

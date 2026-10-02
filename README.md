@@ -39,7 +39,7 @@ Open **[pulse-ebon-eight.vercel.app](https://pulse-ebon-eight.vercel.app)**, pic
 | **Member** | Simran Kaur | The member's phone app: streak, pass, visits, plan |
 
 > [!TIP]
-> Everything you change is saved in your browser, so it's still there next time. To start fresh, go to **Settings → Demo data → Reset demo data**.
+> Everything you change is saved in your browser, so it's still there next time. To start fresh, clear this site's data in your browser (Chrome: the icon left of the address bar → **Site settings → Delete data**).
 
 ## Take the tour
 

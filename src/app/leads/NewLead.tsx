@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { useLocation } from 'react-router';
 import { Button, IconButton } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
-import { INTERESTS, STAGES } from '@/data/seed';
+import { sourceOpts, stageOpts, teamOpts } from '@/components/options';
+import { INTERESTS } from '@/data/seed';
 import type { StageKey } from '@/data/types';
 import { EMAIL_RE } from '@/import/validate';
 import { phoneKey } from '@/lib/format';
@@ -46,11 +47,11 @@ export default function NewLead({ stage, phone: phone0, source: source0 }: { sta
         </div>
         <div className="f2">
           <label>Interested in<Select value={f.interest} onChange={set('interest')} options={INTERESTS} /></label>
-          <label>Came from<Select value={f.source} onChange={set('source')} options={db.sources} /></label>
+          <label>Came from<Select value={f.source} onChange={set('source')} options={sourceOpts(db.sources)} /></label>
         </div>
         <div className="f2">
-          <label>Assign to<Select value={f.owner} onChange={set('owner')} options={db.team.map(t => ({ value: t.id, label: t.name }))} /></label>
-          <label>Stage<Select value={f.stage} onChange={set('stage')} options={STAGES.map(x => x.k)} /></label>
+          <label>Assign to<Select value={f.owner} onChange={set('owner')} options={teamOpts(db)} /></label>
+          <label>Stage<Select value={f.stage} onChange={set('stage')} options={stageOpts()} /></label>
         </div>
         <p className="f-err" role={err ? 'alert' : undefined}>{err}</p>
         <Button variant="primary" onClick={save}>Add lead</Button>

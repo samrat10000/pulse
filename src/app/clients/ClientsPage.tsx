@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { ChevronsUpDown, Download, MessageCircle, Plus, Search, Upload, X } from 'lucide-react';
+import { ChevronsUpDown, CreditCard, Download, Dumbbell, MessageCircle, Plus, Search, Upload, X } from 'lucide-react';
+import { peopleOpts, planOpts } from '@/components/options';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router';
 import { Empty, ExpDate, PageHead, Pager, StatusPill } from '@/components/bits';
@@ -68,8 +69,8 @@ export default function ClientsPage() {
           <div className="tabs" role="tablist">{tabs.map(([k, f]) => <button key={k} role="tab" aria-selected={U.cTab === k} className={clsx(U.cTab === k && 'on')} onClick={() => s.setUi({ cTab: k, cPage: 1 })}>{k}<span>{db.clients.filter(f).length}</span></button>)}</div>
           <div className="tb-r">
             <label className="search"><Search size={15} /><input placeholder="Search name, phone or member ID" aria-label="Search clients" value={U.cQuery} onChange={e => s.setUi({ cQuery: e.target.value, cPage: 1 })} /></label>
-            <Select label="Plan" value={U.cPlan} onChange={v => s.setUi({ cPlan: v, cPage: 1 })} options={[{ value: 'all', label: 'All plans' }, ...db.plans.map(p => p.k)]} />
-            <Select label="Trainer" value={U.cTrainer} onChange={v => s.setUi({ cTrainer: v, cPage: 1 })} options={[{ value: 'all', label: 'All trainers' }, ...TRAINERS]} />
+            <Select label="Plan" value={U.cPlan} onChange={v => s.setUi({ cPlan: v, cPage: 1 })} options={[{ value: 'all', label: 'All plans', icon: <CreditCard size={15} /> }, ...planOpts(db)]} />
+            <Select label="Trainer" value={U.cTrainer} onChange={v => s.setUi({ cTrainer: v, cPage: 1 })} options={[{ value: 'all', label: 'All trainers', icon: <Dumbbell size={15} /> }, ...peopleOpts(TRAINERS)]} />
           </div>
         </div>
         {list.length ? (

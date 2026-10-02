@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { IndianRupee, MessageCircle, Phone, RefreshCw, Snowflake, X } from 'lucide-react';
 import { StatusPill, Timeline } from '@/components/bits';
 import { MembershipCard } from '@/components/MembershipCard';
+import { peopleOpts } from '@/components/options';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button, IconButton } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
@@ -81,7 +82,7 @@ export default function ClientDrawer({ id }: { id: string }) {
         <dl className="kv">
           <dt>Email</dt><dd>{c.email || <span className="muted">None</span>}</dd>
           <dt>Goal</dt><dd>{c.goal}</dd>
-          <dt>Trainer</dt><dd><Select label="Trainer" value={c.trainer} options={TRAINERS.includes(c.trainer) ? TRAINERS : [c.trainer, ...TRAINERS]} onChange={v => { s.setTrainer(c.id, v); toast(`${c.name} will train with ${v}`); }} /></dd>
+          <dt>Trainer</dt><dd><Select label="Trainer" value={c.trainer} options={peopleOpts(TRAINERS.includes(c.trainer) ? TRAINERS : [c.trainer, ...TRAINERS])} onChange={v => { s.setTrainer(c.id, v); toast(`${c.name} will train with ${v}`); }} /></dd>
           <dt>Came from</dt><dd>{c.source}</dd>
           <dt>Sold by</dt><dd><span className="row gap6"><Avatar name={repName(db, c.soldBy)} size="xs" />{repName(db, c.soldBy)}</span></dd>
           <dt>Member since</dt><dd>{since}</dd>

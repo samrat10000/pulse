@@ -1,34 +1,17 @@
 import clsx from 'clsx';
-import { Bell, Building, CreditCard, RotateCcw, Sun } from 'lucide-react';
+import { Bell, Building, CreditCard, Sun } from 'lucide-react';
 import { useState } from 'react';
 import { PageHead } from '@/components/bits';
 import { Button } from '@/components/ui/Button';
 import { Toggle } from '@/components/ui/Toggle';
-import { checkinsToday } from '@/data/rules';
 import { PT_PRICE } from '@/data/seed';
 import type { NotifKey } from '@/data/types';
 import { parseValue } from '@/import/validate';
 import { money } from '@/lib/format';
 import { toast, useDB, useStore, type Theme, type UI } from '@/store/useStore';
 
-const SETS: [UI['set'], typeof Building, string][] = [['gym', Building, 'Gym details'], ['plans', CreditCard, 'Membership plans'], ['notif', Bell, 'Notifications'], ['look', Sun, 'Appearance'], ['demo', RotateCcw, 'Demo data']];
+const SETS: [UI['set'], typeof Building, string][] = [['gym', Building, 'Gym details'], ['plans', CreditCard, 'Membership plans'], ['notif', Bell, 'Notifications'], ['look', Sun, 'Appearance']];
 
-function DemoData() {
-  const db = useDB();
-  const [sure, setSure] = useState(false);
-  return (
-    <>
-      <h3>Demo data</h3>
-      <p>Everything you add or change (leads, members, payments, check-ins, imports, settings, your profile) is saved in this browser and is still here next time you open Pulse. Reset to start the demo again from the original data.</p>
-      <div className="dup-opt" style={{ marginTop: 16 }}>
-        <p>{db.leads.length} leads, {db.clients.length} members, {db.payments.length} receipts, {checkinsToday(db)} check-ins today<small>Reset brings back the original demo data</small></p>
-        {sure
-          ? <div className="row" style={{ gap: 8 }}><Button onClick={() => setSure(false)}>Cancel</Button><Button variant="dark" icon={RotateCcw} onClick={() => { useStore.getState().resetDemo(); setSure(false); toast('Demo data reset'); }}>Yes, reset everything</Button></div>
-          : <Button icon={RotateCcw} onClick={() => setSure(true)}>Reset demo data</Button>}
-      </div>
-    </>
-  );
-}
 const NOTIFS: [NotifKey, string, string][] = [
   ['renew', 'Renewal reminders on WhatsApp', 'Sent to members 7 days and 1 day before their plan ends'],
   ['digest', 'Morning follow-up list', 'Each advisor gets their follow-ups for the day at 8 AM'],
@@ -101,7 +84,6 @@ export default function SettingsPage() {
         <section className="card set-sec">
           {k === 'gym' && <GymForm />}
           {k === 'plans' && <PlansForm />}
-          {k === 'demo' && <DemoData />}
           {k === 'notif' && <>
             <h3>Notifications</h3><p>What Pulse sends to members and to your team.</p>
             <div style={{ marginTop: 12 }}>{NOTIFS.map(([kk, t, d]) => (

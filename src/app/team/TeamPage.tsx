@@ -36,7 +36,11 @@ export function NewRep() {
         <label>Full name<input data-autofocus autoComplete="off" value={f.name} onChange={e => setF({ ...f, name: e.target.value })} onKeyDown={enter} /></label>
         <label>Work email<input type="email" autoComplete="off" value={f.email} onChange={e => setF({ ...f, email: e.target.value })} onKeyDown={enter} /></label>
         <div className="f2">
-          <label>Role<Select value={f.role} onChange={v => setF({ ...f, role: v as TeamMember['role'] })} options={['Membership advisor', 'Sales manager', 'Front desk']} /></label>
+          <label>Role<Select value={f.role} onChange={v => setF({ ...f, role: v as TeamMember['role'] })} options={[
+            { value: 'Membership advisor', label: 'Membership advisor', hint: 'Sells memberships, owns leads' },
+            { value: 'Sales manager', label: 'Sales manager', hint: 'Leads the sales team' },
+            { value: 'Front desk', label: 'Front desk', hint: 'Check-ins, payments, walk-ins' },
+          ]} /></label>
           <label>Monthly target (₹)<input inputMode="numeric" value={f.target} onChange={e => setF({ ...f, target: e.target.value })} onKeyDown={enter} /></label>
         </div>
         <p className="f-err" role={err ? 'alert' : undefined}>{err}</p>

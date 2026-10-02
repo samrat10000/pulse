@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { ChevronsUpDown, Download, Kanban, List, Plus, QrCode, Search, X } from 'lucide-react';
+import { ChevronsUpDown, Download, Kanban, Layers, List, Plus, QrCode, Search, Users, X } from 'lucide-react';
+import { sourceOpts, teamOpts } from '@/components/options';
 import { createPortal } from 'react-dom';
 import { DueChip, Empty, PageHead, Pager, StagePill, TempTag } from '@/components/bits';
 import { Avatar } from '@/components/ui/Avatar';
@@ -70,10 +71,9 @@ function LeadTable() {
       {createPortal(
         <div className={clsx('bulk', sel.size && 'show')} aria-hidden={!sel.size}>
           <b>{sel.size} selected</b>
-          <select className="select" style={{ height: 32, backgroundColor: 'transparent', color: 'inherit', borderColor: 'rgba(127,127,127,.4)' }} aria-label="Assign to" value=""
-            onChange={e => { const v = e.target.value; if (!v) return; const ids = [...sel]; s.assignLeads(ids, v); setSel(new Set()); toast(`${ids.length} leads assigned to ${repName(db, v)}`); }}>
-            <option value="">Assign to…</option>{db.team.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
-          </select>
+          <Select label="Assign to" value="" style={{ height: 32, backgroundColor: 'transparent', color: 'inherit', borderColor: 'rgba(127,127,127,.4)' }}
+            placeholder="Assign to…" options={teamOpts(db)}
+            onChange={v => { const ids = [...sel]; s.assignLeads(ids, v); setSel(new Set()); toast(`${ids.length} leads assigned to ${repName(db, v)}`); }} />
           <button onClick={() => exportCSV(db.leads.filter(l => sel.has(l.id)), [[l => l.name, 'Name'], [l => l.phone, 'Phone'], [l => l.email, 'Email'], [l => l.interest, 'Interested in'], [l => l.source, 'Source'], [l => l.stage, 'Stage'], [l => repName(db, l.owner), 'Assigned to']], 'pulse-leads.csv')}><Download size={14} /> Export</button>
           <button aria-label="Clear selection" onClick={() => setSel(new Set())}><X size={14} /></button>
         </div>, document.body)}
@@ -101,8 +101,8 @@ export default function LeadsPage() {
             : <div className="muted" style={{ fontSize: 13, paddingLeft: 4 }}>Drag a lead to move it. Drop on Joined to convert.</div>}
           <div className="tb-r">
             <label className="search"><Search size={15} /><input placeholder="Search name, phone or goal" aria-label="Search leads" value={U.lQuery} onChange={e => s.setUi({ lQuery: e.target.value, lPage: 1 })} /></label>
-            <Select label="Assigned to" value={U.lOwner} onChange={v => s.setUi({ lOwner: v, lPage: 1 })} options={[{ value: 'all', label: 'Everyone' }, ...db.team.map(t => ({ value: t.id, label: t.name }))]} />
-            <Select label="Source" value={U.lSource} onChange={v => s.setUi({ lSource: v, lPage: 1 })} options={[{ value: 'all', label: 'All sources' }, ...db.sources]} />
+            <Select label="Assigned to" value={U.lOwner} onChange={v => s.setUi({ lOwner: v, lPage: 1 })} options={[{ value: 'all', label: 'Everyone', icon: <Users size={15} /> }, ...teamOpts(db)]} />
+            <Select label="Source" value={U.lSource} onChange={v => s.setUi({ lSource: v, lPage: 1 })} options={[{ value: 'all', label: 'All sources', icon: <Layers size={15} /> }, ...sourceOpts(db.sources)]} />
           </div>
         </div>
         {U.lView === 'table' && <LeadTable />}

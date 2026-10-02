@@ -6,6 +6,7 @@ import { PageHead, StagePill } from '@/components/bits';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Segmented } from '@/components/ui/Segmented';
+import { Select } from '@/components/ui/Select';
 import { autoMap, FIELDS, mapReady, newImp, type FieldKey, type ImportTo } from '@/import/mapping';
 import { extOf, ImportError, loadAOA, readFile, rejectReason } from '@/import/parse';
 import { sampleFile } from '@/import/samples';
@@ -99,7 +100,7 @@ function Mapping() {
             <td className="src"><b>{h}</b></td>
             <td className="samp">{I.rows.slice(0, 3).map(r => r[i]).filter(Boolean).join(', ') || 'Empty'}</td>
             <td className="arrow"><ArrowRight size={14} /></td>
-            <td><select className="select" aria-label={`Field for ${h}`} value={k} onChange={e => pick(i, e.target.value as FieldKey | '')}><option value="">Don't import</option>{FIELDS[I.to].map(([fk, fl]) => <option key={fk} value={fk}>{fl}</option>)}</select></td>
+            <td><Select label={`Field for ${h}`} value={k} onChange={v => pick(i, v as FieldKey | '')} options={[{ value: '', label: "Don't import", hint: 'Leave this column out' }, ...FIELDS[I.to].map(([fk, fl]) => ({ value: fk, label: fl }))]} /></td>
             <td><span className={`match ${how}`}>{how !== 'none' && <Check size={13} strokeWidth={2.4} />}{MATCH[how]}</span></td>
           </tr>
         ); })}</tbody>
