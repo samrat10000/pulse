@@ -58,7 +58,7 @@ Click any section to open it.
 </details>
 
 <details>
-<summary><b>Clients: membership card with a real QR code</b></summary>
+<summary><b>Members: membership card with a real QR code</b></summary>
 <br />
 
 <img src="docs/screens/client.png" alt="Client drawer with membership card, QR code and attendance grid" width="100%" />
@@ -124,7 +124,13 @@ Click any section to open it.
 
 - Import leads or members. Columns are matched for you, even messy ones like "Membership Start Date" or "Contact No".
 - Review shows what's ready, what's a duplicate and what will be skipped, and why. You can skip duplicates or update them.
-- Try it with the built-in sample files, or with [`docs/gym-members-sample.docx`](docs/gym-members-sample.docx) (11 ready, 1 duplicate, 1 skipped).
+- Try it with the built-in sample files, or download one of these demo files and drop it in:
+
+  | File | Import as | What's in it |
+  |---|---|---|
+  | [`docs/sample-leads.csv`](docs/sample-leads.csv) | Leads | 18 messy enquiries: mixed phone formats, a bad email, rows with missing details, and people already in Leads or already members |
+  | [`docs/sample-members.csv`](docs/sample-members.csv) | Members | 17 members with plans, dates, amounts and trainers, including blank and unreadable dates and a repeated row |
+  | [`docs/gym-members-sample.docx`](docs/gym-members-sample.docx) | Members | A Word table of members (11 ready, 1 duplicate, 1 skipped) |
 
 </details>
 
@@ -166,7 +172,7 @@ Follows your device setting, or switch with the moon icon in the top bar or unde
 2. **Leads → Board.** Drag a lead from *Trial done* onto **Joined**. Pick *Half-yearly*, enter **3000** as the amount received, and confirm.
 3. See it everywhere: the member drawer shows **₹8,999 due**, the lead now appears in the Joined column, and **Payments → Pending dues** lists them.
 4. **Check-in desk.** Tap the *Active* demo member: a green welcome, and the count in the sidebar goes up. Try *Expired* to see a member being stopped at the door.
-5. **Import.** Choose *Clients*, drop in `docs/gym-members-sample.docx`, and watch 11 members arrive with their receipts.
+5. **Import.** Choose *Members*, drop in [`docs/sample-members.csv`](docs/sample-members.csv) (or `docs/gym-members-sample.docx`), and watch the new members arrive with their receipts. Then choose *Leads* and drop in [`docs/sample-leads.csv`](docs/sample-leads.csv) to see duplicates and skipped rows flagged.
 6. **Sign out and in as Member** (Simran). Tap **Pass → Check in now**, then sign back in as Front desk: she's at the top of the *Just checked in* list.
 
 ## Run it locally
