@@ -14,7 +14,7 @@ import { useLogout } from './AppShell';
 
 export const NAV: [string, [Page, LucideIcon, string][]][] = [
   ['Overview', [['dashboard', LayoutDashboard, 'Dashboard'], ['reports', TrendingUp, 'Reports']]],
-  ['People', [['leads', UserPlus, 'Leads'], ['clients', Users, 'Clients'], ['team', Trophy, 'Sales team'], ['campaigns', Send, 'Campaigns']]],
+  ['People', [['leads', UserPlus, 'Leads'], ['clients', Users, 'Members'], ['team', Trophy, 'Sales team'], ['campaigns', Send, 'Campaigns']]],
   ['Front desk', [['checkin', ScanLine, 'Check-in desk'], ['payments', IndianRupee, 'Payments']]],
   ['Data', [['import', Upload, 'Import']]],
   ['Account', [['settings', Settings, 'Settings'], ['profile', User, 'Profile']]],

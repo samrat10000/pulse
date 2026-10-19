@@ -41,7 +41,7 @@ export default function PlanForm({ ctx, init }: { ctx: ConvCtx; init: Conv }) {
     toast(ctx === 'renew' ? `${c.name} renewed till ${fmtDate(c.end, true)}${r < total ? `, ${money(total - r)} due` : ''}` : `${c.name} is now a member${r < total ? `, ${money(total - r)} due` : ''}`);
   };
 
-  const title = ctx === 'renew' ? 'Renew membership' : ctx === 'new' ? 'Add client' : 'Convert to client';
+  const title = ctx === 'renew' ? 'Renew membership' : ctx === 'new' ? 'Add member' : 'Convert to member';
   const sub = ctx === 'renew' ? `${C.name}'s new plan starts ${C.startOff > 0 ? `when the current one ends (${fmtDate(C.startOff, true)})` : 'today'}.`
     : ctx === 'new' ? 'Add a member who has already paid.' : `${C.name} becomes a member of ${db.gym.name}.`;
 
@@ -88,7 +88,7 @@ export default function PlanForm({ ctx, init }: { ctx: ConvCtx; init: Conv }) {
           <div><span>{carry > 0 ? 'Total to pay, incl. 18% GST' : 'Total, incl. 18% GST'}</span><span className="num">{money(total)}</span></div>
         </div>
         <p className="f-err" role={err ? 'alert' : undefined}>{err}</p>
-        <Button variant="primary" icon={Check} onClick={save}>{ctx === 'renew' ? `Renew for ${money(total)}` : ctx === 'new' ? 'Add client' : 'Confirm and add member'}</Button>
+        <Button variant="primary" icon={Check} onClick={save}>{ctx === 'renew' ? `Renew for ${money(total)}` : ctx === 'new' ? 'Add member' : 'Confirm and add member'}</Button>
       </div>
     </>
   );

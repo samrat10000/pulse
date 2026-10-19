@@ -60,15 +60,15 @@ export default function ClientsPage() {
 
   return (
     <>
-      <PageHead title="Clients" sub={`${db.clients.length} members, ${activeCount(db)} active, ${expiringCount(db)} ending in the next 14 days`}>
+      <PageHead title="Members" sub={`${db.clients.length} members, ${activeCount(db)} active, ${expiringCount(db)} ending in the next 14 days`}>
         {can(me, 'import') && <Button icon={Upload} onClick={() => nav('/app/import')}>Import</Button>}
-        <Button variant="primary" icon={Plus} onClick={() => s.startConv('new')}>Add client</Button>
+        <Button variant="primary" icon={Plus} onClick={() => s.startConv('new')}>Add member</Button>
       </PageHead>
       <div className="card">
         <div className="toolbar">
           <div className="tabs" role="tablist">{tabs.map(([k, f]) => <button key={k} role="tab" aria-selected={U.cTab === k} className={clsx(U.cTab === k && 'on')} onClick={() => s.setUi({ cTab: k, cPage: 1 })}>{k}<span>{db.clients.filter(f).length}</span></button>)}</div>
           <div className="tb-r">
-            <label className="search"><Search size={15} /><input placeholder="Search name, phone or member ID" aria-label="Search clients" value={U.cQuery} onChange={e => s.setUi({ cQuery: e.target.value, cPage: 1 })} /></label>
+            <label className="search"><Search size={15} /><input placeholder="Search name, phone or member ID" aria-label="Search members" value={U.cQuery} onChange={e => s.setUi({ cQuery: e.target.value, cPage: 1 })} /></label>
             <Select label="Plan" value={U.cPlan} onChange={v => s.setUi({ cPlan: v, cPage: 1 })} options={[{ value: 'all', label: 'All plans', icon: <CreditCard size={15} /> }, ...planOpts(db)]} />
             <Select label="Trainer" value={U.cTrainer} onChange={v => s.setUi({ cTrainer: v, cPage: 1 })} options={[{ value: 'all', label: 'All trainers', icon: <Dumbbell size={15} /> }, ...peopleOpts(TRAINERS)]} />
           </div>
@@ -104,7 +104,7 @@ export default function ClientsPage() {
         <div className={clsx('bulk', sel.size && 'show')} aria-hidden={!sel.size}>
           <b>{sel.size} selected</b>
           <button onClick={() => { const n = sel.size; setSel(new Set()); toast(`Renewal reminders sent to ${n} members`); }}><MessageCircle size={14} /> Send renewal reminder</button>
-          <button onClick={() => exportCSV(db.clients.filter(c => sel.has(c.id)), [[c => c.memberNo, 'Member ID'], [c => c.name, 'Name'], [c => c.phone, 'Phone'], [c => c.email, 'Email'], [c => c.plan, 'Plan'], [c => fmtDate(c.end, true), 'Valid till'], [c => clientStatus(c), 'Status'], [c => c.trainer, 'Trainer'], [c => c.paid, 'Paid']], 'pulse-clients.csv')}><Download size={14} /> Export</button>
+          <button onClick={() => exportCSV(db.clients.filter(c => sel.has(c.id)), [[c => c.memberNo, 'Member ID'], [c => c.name, 'Name'], [c => c.phone, 'Phone'], [c => c.email, 'Email'], [c => c.plan, 'Plan'], [c => fmtDate(c.end, true), 'Valid till'], [c => clientStatus(c), 'Status'], [c => c.trainer, 'Trainer'], [c => c.paid, 'Paid']], 'pulse-members.csv')}><Download size={14} /> Export</button>
           <button aria-label="Clear selection" onClick={() => setSel(new Set())}><X size={14} /></button>
         </div>, document.body)}
     </>

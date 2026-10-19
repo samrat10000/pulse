@@ -44,7 +44,7 @@ function Palette({ close }: { close: () => void }) {
     const pages: Item[] = NAV.flatMap(([, it]) => it).filter(([k]) => can(me, k)).map(([k, icon, label]) => ({ g: 'Pages', icon, label, run: () => nav('/app/' + k) }));
     const actions: Item[] = [
       { g: 'Actions', icon: Plus, label: 'Add lead', run: () => s.openDrawer({ k: 'newLead' }) },
-      { g: 'Actions', icon: UserPlus, label: 'Add client', run: () => s.startConv('new') },
+      { g: 'Actions', icon: UserPlus, label: 'Add member', run: () => s.startConv('new') },
       ...(can(me, 'import') ? [{ g: 'Actions', icon: Upload, label: 'Import a file', run: () => nav('/app/import') }] : []),
       { g: 'Actions', icon: isDark(theme) ? Sun : Moon, label: 'Switch theme', run: () => s.setTheme(isDark(theme) ? 'light' : 'dark') },
       { g: 'Actions', icon: LogOut, label: 'Sign out', run: logout },
@@ -53,7 +53,7 @@ function Palette({ close }: { close: () => void }) {
     const leads: Item[] = t
       ? db.leads.filter(match).slice(0, 5).map(l => ({ g: 'Leads', av: l.name, label: l.name, sub: `${l.stage} · ${l.interest}`, run: () => s.openDrawer({ k: 'lead', id: l.id }) }))
       : db.leads.filter(isDue).slice(0, 3).map(l => ({ g: 'Follow up today', av: l.name, label: l.name, sub: l.phone, run: () => s.openDrawer({ k: 'lead', id: l.id }) }));
-    const members: Item[] = t ? db.clients.filter(c => match(c) || c.memberNo.toLowerCase().includes(t)).slice(0, 5).map(c => ({ g: 'Clients', av: c.name, label: c.name, sub: `${c.memberNo} · ${clientStatus(c)}`, run: () => s.openDrawer({ k: 'client', id: c.id }) })) : [];
+    const members: Item[] = t ? db.clients.filter(c => match(c) || c.memberNo.toLowerCase().includes(t)).slice(0, 5).map(c => ({ g: 'Members', av: c.name, label: c.name, sub: `${c.memberNo} · ${clientStatus(c)}`, run: () => s.openDrawer({ k: 'client', id: c.id }) })) : [];
     return [...[...pages, ...actions].filter(x => !t || x.label.toLowerCase().includes(t)), ...leads, ...members];
   }, [q, db, me, theme]); // eslint-disable-line react-hooks/exhaustive-deps
 

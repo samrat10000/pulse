@@ -7,7 +7,7 @@ import { EMAIL_RE } from '@/import/validate';
 import { toast, useDB, useStore } from '@/store/useStore';
 import { useLogout } from '../AppShell';
 
-const ACCESS = { owner: 'Full access', sales: 'Leads, clients, sales team', desk: 'Check-ins, payments, clients', member: 'Member app' };
+const ACCESS = { owner: 'Full access', sales: 'Leads, members, sales team', desk: 'Check-ins, payments, members', member: 'Member app' };
 
 export default function ProfilePage() {
   const db = useDB();

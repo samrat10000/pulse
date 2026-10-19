@@ -92,7 +92,7 @@ export function buildRecords(db: DB, to: ImportTo, rows: string[][], map: ColMap
     if (st !== 'err') {
       const pk = phoneKey(phone), ek = email.toLowerCase(), key = pk.length >= 10 ? 'p' + pk : 'e' + ek;
       const dup = (m: string) => { st = 'dup'; issues.splice(0, issues.length, m); };
-      if ((pk.length >= 10 && byPhone.has(pk)) || (ek && byEmail.has(ek))) { existing = byPhone.get(pk) || byEmail.get(ek) || null; dup(to === 'Leads' ? 'Already in Leads' : 'Already a client'); }
+      if ((pk.length >= 10 && byPhone.has(pk)) || (ek && byEmail.has(ek))) { existing = byPhone.get(pk) || byEmail.get(ek) || null; dup(to === 'Leads' ? 'Already in Leads' : 'Already a member'); }
       else if (members && pk.length >= 10 && members.has(pk)) dup('Already a member');
       else if (seen.has(key)) dup('Repeated in this file');
       seen.add(key);

@@ -47,7 +47,7 @@ function Upload() {
     <>
       <div className="dup-opt" style={{ margin: '0 0 14px' }}>
         <p>What's in this file?<small>{I.to === 'Leads' ? "People who enquired but haven't joined yet" : 'Paying members with a plan'}</small></p>
-        <Segmented label="What's in this file?" value={I.to} onChange={(v: ImportTo) => useStore.setState({ imp: newImp(v) })} options={[{ value: 'Leads', label: 'Leads' }, { value: 'Clients', label: 'Clients (members)' }]} />
+        <Segmented label="What's in this file?" value={I.to} onChange={(v: ImportTo) => useStore.setState({ imp: newImp(v) })} options={[{ value: 'Leads', label: 'Leads' }, { value: 'Clients', label: 'Members' }]} />
       </div>
       <div className={clsx('dropzone', over && 'over')} role="button" tabIndex={0} aria-label="Choose a file to import"
         onClick={browse} onKeyDown={e => { if ((e.key === 'Enter' || e.key === ' ') && e.target === e.currentTarget) { e.preventDefault(); browse(); } }}
@@ -68,7 +68,7 @@ function Upload() {
 
 function FileChip() {
   const I = useStore(s => s.imp), f = I.file!;
-  const word = I.to === 'Leads' ? 'leads' : 'clients';
+  const word = I.to === 'Leads' ? 'leads' : 'members';
   return (
     <div className="file-chip">
       <span className={`ft ${f.ext}`}>{f.ext.toUpperCase()}</span>
@@ -124,7 +124,7 @@ const StIcon = ({ st }: { st: ImportRecord['st'] }) => st === 'err' ? <span clas
 function Review({ run }: { run: () => void }) {
   const I = useStore(s => s.imp);
   const s = useStore.getState();
-  const R = I.records!, word = I.to === 'Leads' ? 'leads' : 'clients';
+  const R = I.records!, word = I.to === 'Leads' ? 'leads' : 'members';
   const c = { ok: R.filter(r => r.st === 'ok' || r.st === 'warn').length, dup: R.filter(r => r.st === 'dup').length, err: R.filter(r => r.st === 'err').length };
   const willAdd = R.filter(r => willImport(r, I.dupMode)).length;
   const shown = R.filter(r => I.view === 'all' || (I.view === 'ok' ? (r.st === 'ok' || r.st === 'warn') : r.st === I.view));
@@ -163,7 +163,7 @@ function Review({ run }: { run: () => void }) {
 function Done() {
   const I = useStore(s => s.imp), r = I.result!;
   const nav = useNavigate();
-  const word = I.to === 'Leads' ? 'leads' : 'clients';
+  const word = I.to === 'Leads' ? 'leads' : 'members';
   const view = () => {
     const s = useStore.getState(), to = I.to;
     s.setImp(newImp(to));
@@ -188,7 +188,7 @@ export default function ImportPage() {
   const db = useDB();
   const I = useStore(s => s.imp);
   const [prog, setProg] = useState({ p: 0, n: 0 });
-  const word = I.to === 'Leads' ? 'leads' : 'clients';
+  const word = I.to === 'Leads' ? 'leads' : 'members';
 
   useEffect(() => { if (I.step === 4) useStore.setState(s => ({ imp: newImp(s.imp.to) })); }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -205,7 +205,7 @@ export default function ImportPage() {
       st.mutate(db => { res = commitImport(db, imp.to, imp.records!, imp.dupMode, imp.file!.name); });
       st.markFresh(...res.fresh);
       st.setImp({ running: false, step: 4, result: res });
-      toast(`${res.added} ${imp.to === 'Leads' ? 'leads' : 'clients'} imported`);
+      toast(`${res.added} ${imp.to === 'Leads' ? 'leads' : 'members'} imported`);
     };
     requestAnimationFrame(tick);
   };
@@ -231,7 +231,7 @@ export default function ImportPage() {
           <div className="card side-card">
             <h4>Recent imports</h4>
             {db.imports.slice(0, 5).map(h => { const ext = extOf(h.file); return (
-              <div className="hist" key={h.file + h.at}><span className={`ft ${ext}`}>{ext.toUpperCase()}</span><div style={{ minWidth: 0 }}><b>{h.file}</b><small>{h.to} · {agoMs(h.at)}</small></div><span className="plus">+{num(h.added)}</span></div>
+              <div className="hist" key={h.file + h.at}><span className={`ft ${ext}`}>{ext.toUpperCase()}</span><div style={{ minWidth: 0 }}><b>{h.file}</b><small>{h.to === 'Clients' ? 'Members' : h.to} · {agoMs(h.at)}</small></div><span className="plus">+{num(h.added)}</span></div>
             ); })}
           </div>
           <div className="card side-card">

@@ -17,7 +17,7 @@ const ALLOW: Record<RoleKey, Page[] | null> = {
   member: ['me'],
 };
 export const can = (me: Account | null, page: Page) => !!me && (me.key === 'member' ? page === 'me' : page !== 'me' && (!ALLOW[me.key] || ALLOW[me.key]!.includes(page)));
-export const TITLES: Record<Page, string> = { reports: 'Reports', campaigns: 'Campaigns', me: 'My membership', dashboard: 'Dashboard', leads: 'Leads', clients: 'Clients', team: 'Sales team', checkin: 'Check-in desk', payments: 'Payments', import: 'Import', settings: 'Settings', profile: 'Profile' };
+export const TITLES: Record<Page, string> = { reports: 'Reports', campaigns: 'Campaigns', me: 'My membership', dashboard: 'Dashboard', leads: 'Leads', clients: 'Members', team: 'Sales team', checkin: 'Check-in desk', payments: 'Payments', import: 'Import', settings: 'Settings', profile: 'Profile' };
 
 /* ---------- overlays ---------- */
 export type ConvCtx = 'convert' | 'new' | 'renew';

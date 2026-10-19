@@ -37,7 +37,7 @@ export default function LeadDrawer({ id }: { id: string }) {
       </div>
       {lost
         ? <Button className="btn-wide" icon={RefreshCw} onClick={() => { s.reopenLead(l.id); toast(`${l.name} reopened`); }}>Reopen lead</Button>
-        : <Button variant="primary" className="btn-wide" icon={UserPlus} onClick={() => s.startConv('convert', l)}>Convert to client</Button>}
+        : <Button variant="primary" className="btn-wide" icon={UserPlus} onClick={() => s.startConv('convert', l)}>Convert to member</Button>}
       <div className="dw-sec"><h4>Details</h4>
         <dl className="kv">
           <dt>Phone</dt><dd className="num">{l.phone || none}</dd>

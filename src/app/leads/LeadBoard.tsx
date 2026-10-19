@@ -175,7 +175,7 @@ export default function LeadBoard() {
       </div>
         <Column id="Joined" className="won">
           <div className="col-h" style={{ '--c': '#15A05A' } as React.CSSProperties}><i />Joined<span className="cnt">{joined.length}</span><span className="tot">30 days</span></div>
-          <div className="drop-hint" style={{ flex: 'none', minHeight: 110 }}><span><UserPlus size={20} style={{ margin: '0 auto 6px' }} />Drop a lead here to make them a client</span></div>
+          <div className="drop-hint" style={{ flex: 'none', minHeight: 110 }}><span><UserPlus size={20} style={{ margin: '0 auto 6px' }} />Drop a lead here to make them a member</span></div>
           {joined.slice(0, 8).map(c => (
             <div key={c.id} className={clsx('lead-c joined-c', fresh.has(c.id) && 'landed')} role="button" tabIndex={0} style={{ cursor: 'pointer' }}
               onClick={() => s.openDrawer({ k: 'client', id: c.id })} onKeyDown={e => { if (e.key === 'Enter') s.openDrawer({ k: 'client', id: c.id }); }}>
@@ -183,7 +183,7 @@ export default function LeadBoard() {
               <div className="foot"><Avatar name={repName(db, c.soldBy)} size="xs" />{c.since === 0 ? 'Joined today' : `Joined ${ago(c.since).toLowerCase()}`}{c.due > 0 && <span className="due today" style={{ marginLeft: 'auto' }}>{money(c.due)} due</span>}</div>
             </div>
           ))}
-          {joined.length > 8 && <button className="col-add" onClick={() => { s.setUi({ cTab: 'All', cPage: 1 }); nav('/app/clients'); }}>+{joined.length - 8} more in Clients</button>}
+          {joined.length > 8 && <button className="col-add" onClick={() => { s.setUi({ cTab: 'All', cPage: 1 }); nav('/app/clients'); }}>+{joined.length - 8} more in Members</button>}
         </Column>
       </div>
       <DragOverlay dropAnimation={null}>{active && <div className="lead-c overlay"><CardBody l={active} /></div>}</DragOverlay>
